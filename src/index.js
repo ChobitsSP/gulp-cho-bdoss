@@ -12,16 +12,7 @@ class OssClient {
     return this.client.putObjectFromFile(this.option.bucket, ossPath, file.path);
   }
   head(ossPath) {
-    return Promise.reject('Object not exists');
-    // return new Promise((resolve, reject) => {
-    //   this.client.headObject({
-    //     Bucket: this.option.Bucket,
-    //     Region: this.option.Region,
-    //     Key: ossPath,
-    //   }, function (err, data) {
-    //     err ? reject(err) : resolve(data);
-    //   });
-    // });
+    return client.getObjectMetadata(this.option.bucket, ossPath);
   }
 }
 
