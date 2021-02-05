@@ -1,0 +1,30 @@
+{
+  "name": "gulp-cho-bdoss",
+  "version": "1.0.0",
+  "description": "Gulp Task to transform Typescript path imports into relative paths using the tsconfig",
+  "main": "index.js",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ChobitsSP/gulp-cho-bdoss.git"
+  },
+  "keywords": [
+    "gulpplugin"
+  ],
+  "author": "Chobits",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChobitsSP/gulp-cho-bdoss/issues"
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "dependencies": {
+    "baidubce-sdk": "0.0.23"
+  }
+}
