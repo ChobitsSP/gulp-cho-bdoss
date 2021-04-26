@@ -1,5 +1,5 @@
 # gulp-cho-bdoss
-https://www.npmjs.com/package/ali-oss
+gulp-cho-bdoss
 
 ## Usage
 
@@ -16,13 +16,18 @@ var alias = require('gulp-cho-bdoss');
 gulp.task('test', () => {
   return gulp.src('dist/**/*', { base: 'dist' })
     .pipe(alias({
-      region: 'oss-cn-beijing',
-      accessKeyId: 'accessKeyId',
-      accessKeySecret: 'accessKeySecret',
-      bucket: 'chobits',
-      prefix: 'gulp-cho-bdoss',
+      config: {
+        endpoint: '',         //传入Bucket所在区域域名
+        credentials: {
+          ak: '',         //您的AccessKey
+          sk: '',      //您的SecretAccessKey
+        }
+      },
+      bucket: 'this-is-a-bucket',
       ignoreExist: false,
-      putOptions: {}
+      putOptions: {
+
+      },
     }));
 });
 ```

@@ -5,12 +5,18 @@ gulp.task('default', ['test']);
 gulp.task('test', () => {
   return gulp.src('src/**/*.js', { base: 'src' }).pipe(
     alias({
-      credentials: {
-        ak: 'ak',
-        sk: 'sk'
+      config: {
+        endpoint: '',         //传入Bucket所在区域域名
+        credentials: {
+          ak: '',         //您的AccessKey
+          sk: '',      //您的SecretAccessKey
+        }
       },
-      endpoint: 'http://10.105.97.15',
       bucket: 'this-is-a-bucket',
+      ignoreExist: true,
+      putOptions: {
+
+      },
     })
   );
 });

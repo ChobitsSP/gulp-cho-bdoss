@@ -1,18 +1,18 @@
 const through = require('through2');
-const bce = require('baidubce-sdk');
+const { BosClient } = require('@baiducloud/sdk');
 const fs = require('fs');
 // const path = require('path');
 
 class OssClient {
   constructor(option) {
-    this.client = new bce.BosClient(option);
+    this.client = new BosClient(option.config);
     this.option = option;
   }
   put(ossPath, file, opts) {
-    return this.client.putObjectFromFile(this.option.bucket, ossPath, file.path);
+    return this.client.putObjectFromFile(this.option.bucket, ossPath, file.path, opts);
   }
   head(ossPath) {
-    return client.getObjectMetadata(this.option.bucket, ossPath);
+    return this.client.getObjectMetadata(this.option.bucket, ossPath);
   }
 }
 
@@ -34,7 +34,7 @@ function getFileKey(file, prefix) {
 }
 
 /**
- * 上传到阿里云oss
+ * 上传到oss
  * @param {OssClient} client
  * @param {string} ossPath
  * @param {*} file
@@ -44,7 +44,7 @@ async function uploadFile(client, ossPath, file, opts) {
   try {
     await client.head(ossPath);
   } catch (err) {
-    if (err.message === 'Object not exists') {
+    if (err.status_code === 404) {
       return client.put(ossPath, file, opts);
     } else {
       throw err;
@@ -53,7 +53,7 @@ async function uploadFile(client, ossPath, file, opts) {
 }
 
 /**
- * 上传到阿里云oss
+ * 上传到oss
  * @param {OssClient} client
  * @param {string} ossPath
  * @param {*} file
@@ -72,16 +72,6 @@ function main(option) {
   const client = new OssClient(option);
 
   return through.obj(function (file, enc, cb) {
-    // if (file.isBuffer()) {
-    //   var code = file.contents.toString("utf-8");
-    //   code = replacePath(code, file.path, baseUrl, paths);
-    //   file.contents = Buffer.from(code, 'utf-8');
-    // } else if (file.isStream()) {
-    //   var code = fs.readFileSync(file.path, "utf8");
-    //   code = replacePath(code, file.path, baseUrl, paths);
-    //   file.contents = Buffer.from(code, 'utf-8');
-    // }
-
     if (file.isBuffer()) {
       const ossPath = getFileKey(file, option.prefix);
       const uploadFunc = option.ignoreExist ? uploadFile : uploadFile2;
